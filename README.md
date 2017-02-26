@@ -34,11 +34,11 @@ ero -help
   -match string
         regex for matching vcl directories
   -service string
-        your service id (default: FASTLY_SERVICE_ID) (default "FASTLY_SERVICE_ID")
+        your service id (default "FASTLY_SERVICE_ID")
   -skip string
         regex for skipping vcl directories (default "^____")
   -token string
-        your fastly api token (default: FASTLY_API_TOKEN) (default "FASTLY_API_TOKEN")
+        your fastly api token (default "FASTLY_API_TOKEN")
 ```
 
 Specify credentials via cli flags:
