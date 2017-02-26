@@ -1,0 +1,5 @@
+package: .
+import:
+- package: github.com/fatih/color
+  version: ^1.4.0
+- package: github.com/sethvargo/go-fastly

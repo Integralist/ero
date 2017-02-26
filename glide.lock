@@ -1,0 +1,25 @@
+hash: 2f70666ef9d71cbdc62d04c833324eddc1ff24fdf918ea705be9a1783074ca9f
+updated: 2017-02-26T18:56:06.409858354Z
+imports:
+- name: github.com/ajg/form
+  version: 523a5da1a92f01b01f840b61689c0340a0243532
+- name: github.com/fatih/color
+  version: 7824417a424b65227be8ac9b14d545a7f3e6c3f0
+- name: github.com/hashicorp/go-cleanhttp
+  version: 3573b8b52aa7b37b9358d966a898feb387f62437
+- name: github.com/mattn/go-colorable
+  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
+  repo: https://github.com/mattn/go-colorable
+- name: github.com/mattn/go-isatty
+  version: dda3de49cbfcec471bd7a70e6cc01fcc3ff90109
+  repo: https://github.com/mattn/go-isatty
+- name: github.com/mitchellh/mapstructure
+  version: db1efb556f84b25a0a13a04aad883943538ad2e0
+- name: github.com/sethvargo/go-fastly
+  version: f6b8a767b50f3384b2b7cc2f86828ae45c613881
+- name: golang.org/x/sys
+  version: e24f485414aeafb646f6fca458b0bf869c0880a1
+  repo: https://go.googlesource.com/sys
+  subpackages:
+  - unix
+testImports: []
