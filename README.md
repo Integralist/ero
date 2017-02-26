@@ -18,6 +18,8 @@ go get github.com/integralist/ero
 
 Alternatively you can [download a pre-compiled binary](#)
 
+> Once downloaded, ensure the binary is copied into your local bin path so it can be executed from any where (e.g. `cp ./ero.darwin /usr/local/bin/ero`)
+
 ## Usage
 
 ```bash
@@ -75,3 +77,52 @@ ero -skip 'foo|bar'
 
 > If no flag provided, we'll look for the environment var:  
 > `VCL_SKIP_DIRECTORY`
+
+## Example
+
+Here is an example execution:
+
+```bash
+$ ero -match www -debug
+
+No difference between the version (123) of 'ab_tests_callback' and the version found locally
+        /Users/foo/code/cdn/www/fastly/ab_tests_callback.vcl
+
+No difference between the version (123) of 'ab_tests_deliver' and the version found locally
+        /Users/foo/code/cdn/www/fastly/ab_tests_deliver.vcl
+
+No difference between the version (123) of 'blacklist' and the version found locally
+        /Users/foo/code/cdn/www/fastly/blacklist.vcl
+
+No difference between the version (123) of 'ab_tests_config' and the version found locally
+        /Users/foo/code/cdn/www/fastly/ab_tests_config.vcl
+
+No difference between the version (123) of 'set_country_cookie' and the version found locally
+        /Users/foo/code/cdn/www/fastly/set_country_cookie.vcl
+
+No difference between the version (123) of 'ab_tests_recv' and the version found locally
+        /Users/foo/code/cdn/www/fastly/ab_tests_recv.vcl
+
+There was a difference between the version (123) of 'main' and the version found locally
+        /Users/foo/code/cdn/www/fastly/main.vcl
+
+18,21c18
+<   # Blacklist check
+<   # Add any IP or User-Agent that should be blacklisted to the blacklist.vcl file
+<   call check_ip_blacklist;
+<   call check_url_blacklist;
+---
+>   call check_foo_blacklist;
+```
+
+## Build
+
+I find using [Gox](https://github.com/mitchellh/gox) the simplest way to build multiple OS versions of a Golang application:
+
+```bash
+go get github.com/mitchellh/gox
+
+gox -osarch="linux/amd64" -osarch="darwin/amd64" -osarch="windows/amd64" -output="ero.{{.OS}}"
+
+./ero.darwin -h
+```
