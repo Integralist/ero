@@ -1,12 +1,16 @@
-# ero
+# Ero
 
-Ero is a [Go](https://golang.org) binary diff checker between local VCL files and those stored in a [Fastly CDN](https://www.fastly.com/) account
+Ero is a cli tool, built in [Go](https://golang.org), used to diff between local & remote [Fastly CDN](https://www.fastly.com/) VCL files Edit
 
-The purpose of this binary is to allow you to easily check whether the version of a set of vcl files for a specific service 'version' (in Fastly terminology) is actually what you have in a local repo.
+## Why?
 
-Typically I will be working within a 'staging' service environment (this is where we test out configuration before applying it to our production environment). Lots of different engineers 'borrow' the staging environment so they can test out their files, but they don't necessarily put `master` back. Meaning I don't know what's changed in comparison to the branch I happen to be working on.
+Typically when modifying VCL files, I'll be working within a 'staging' environment (this would be where we test out any VCL changes _before_ applying them to our production environment). 
 
-This tool allows me to quickly verify which vcl files I need to update, as apposed to me blindly uploading 10+ separate vcl files via the Fastly UI.
+Lots of different engineers 'borrow' the staging environment so they can test their changes, but they don't necessarily put the `master` version back (which leaves the stage environment in an unknown, and possibly unstable, state). 
+
+This ultimately means I don't know what's changed in comparison to the branch I happen to be working on. What I've experienced in the past is a scenario where I upload a single VCL file to stage (this would be the file I'm modifying), but things don't work as expected because another VCL file has been changed to something from another engineer's testing branch and it causes a conflict or some other odd behaviour.
+
+The `ero` cli tool allows me to quickly verify which files I _actually_ need to update (i.e. the file on stage isn't the same as what's in `master`). Otherwise I'll be forced to blindly upload 10+ separate VCL files via the Fastly UI to ensure that stage is in a stable state for me to upload my own changes on top of.
 
 > ero is "difference" in Finnish
 
@@ -15,10 +19,6 @@ This tool allows me to quickly verify which vcl files I need to update, as appos
 ```bash
 go get github.com/integralist/ero
 ```
-
-Alternatively you can [download a pre-compiled binary](#)
-
-> Once downloaded, ensure the binary is copied into your local bin path so it can be executed from any where (e.g. `cp ./ero.darwin /usr/local/bin/ero`)
 
 ## Usage
 
