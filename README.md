@@ -1,6 +1,6 @@
 # Ero
 
-Ero is a cli tool, built in [Go](https://golang.org), used to diff between local & remote [Fastly CDN](https://www.fastly.com/) VCL files Edit
+Ero is a cli tool, built in [Go](https://golang.org), used to diff between local & remote [Fastly CDN](https://www.fastly.com/) VCL files
 
 ## Why?
 
