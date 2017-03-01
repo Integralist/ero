@@ -39,6 +39,10 @@ ero -help
         regex for skipping vcl directories (default "^____")
   -token string
         your fastly api token (default "FASTLY_API_TOKEN")
+  -vcl-version string
+        specify Fastly service 'version' to verify against
+  -version
+        show application version
 ```
 
 Specify credentials via cli flags:
