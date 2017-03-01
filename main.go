@@ -54,6 +54,7 @@ var ch chan vclResponse
 
 func main() {
 	help := flag.Bool("help", false, "show available flags")
+	appVersion := flag.Bool("version", false, "show application version")
 	debug := flag.Bool("debug", false, "show the error/diff output")
 	service := flag.String("service", os.Getenv("FASTLY_SERVICE_ID"), "your service id (fallback: FASTLY_SERVICE_ID)")
 	token := flag.String("token", os.Getenv("FASTLY_API_TOKEN"), "your fastly api token (fallback: FASTLY_API_TOKEN)")
@@ -64,6 +65,11 @@ func main() {
 
 	if *help == true {
 		flag.PrintDefaults()
+		os.Exit(1)
+	}
+
+	if *appVersion == true {
+		fmt.Println("1.0.0")
 		os.Exit(1)
 	}
 
