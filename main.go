@@ -40,6 +40,7 @@ type vclResponse struct {
 // Globals needed for sharing between functions
 var fastlyServiceID string
 var latestVersion string
+var selectedVersion string
 
 // List of VCL files to process
 var vclFiles []string
@@ -56,6 +57,7 @@ func main() {
 	help := flag.Bool("help", false, "show available flags")
 	appVersion := flag.Bool("version", false, "show application version")
 	debug := flag.Bool("debug", false, "show the error/diff output")
+	serviceVersion := flag.String("vcl-version", "", "specify Fastly service 'version' to verify against")
 	service := flag.String("service", os.Getenv("FASTLY_SERVICE_ID"), "your service id (fallback: FASTLY_SERVICE_ID)")
 	token := flag.String("token", os.Getenv("FASTLY_API_TOKEN"), "your fastly api token (fallback: FASTLY_API_TOKEN)")
 	dir := flag.String("dir", os.Getenv("VCL_DIRECTORY"), "vcl directory to compare files against")
@@ -112,6 +114,12 @@ func main() {
 
 	latestVersion = strconv.Itoa(wv[len(wv)-1].Number)
 
+	if *serviceVersion != "" {
+		selectedVersion = *serviceVersion
+	} else {
+		selectedVersion = latestVersion
+	}
+
 	walkError := filepath.Walk(*dir, aggregate)
 	if walkError != nil {
 		fmt.Printf("filepath.Walk() returned an error: %v\n", walkError)
@@ -157,7 +165,7 @@ func getVCL(path string, client *fastly.Client) {
 
 	vclFile, err := client.GetVCL(&fastly.GetVCLInput{
 		Service: fastlyServiceID,
-		Version: latestVersion,
+		Version: selectedVersion,
 		Name:    name,
 	})
 
@@ -192,12 +200,12 @@ func processDiff(vr vclResponse, debug bool) {
 	cmd.Stdin = strings.NewReader(vr.Content)
 
 	if cmdOut, err = cmd.Output(); err != nil {
-		color.Red("\nThere was a difference between the version (%s) of '%s' and the version found locally\n\t%s\n", latestVersion, vr.Name, vr.Path)
+		color.Red("\nThere was a difference between the version (%s) of '%s' and the version found locally\n\t%s\n", selectedVersion, vr.Name, vr.Path)
 
 		if debug == true {
 			fmt.Printf("\n%s\n", string(cmdOut))
 		}
 	} else {
-		color.Green("\nNo difference between the version (%s) of '%s' and the version found locally\n\t%s\n", latestVersion, vr.Name, vr.Path)
+		color.Green("\nNo difference between the version (%s) of '%s' and the version found locally\n\t%s\n", selectedVersion, vr.Name, vr.Path)
 	}
 }
