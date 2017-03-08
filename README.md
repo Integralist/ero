@@ -2,6 +2,8 @@
 
 Ero is a cli tool, built in [Go](https://golang.org), used to diff between local & remote [Fastly CDN](https://www.fastly.com/) VCL files
 
+> ero is "difference" in Finnish
+
 ## Why?
 
 Typically when modifying VCL files, I'll be working within a 'staging' environment (this would be where we test out any VCL changes _before_ applying them to our production environment). 
@@ -11,8 +13,6 @@ Lots of different engineers 'borrow' the staging environment so they can test th
 This ultimately means I don't know what's changed in comparison to the branch I happen to be working on. What I've experienced in the past is a scenario where I upload a single VCL file to stage (this would be the file I'm modifying), but things don't work as expected because another VCL file has been changed to something from another engineer's testing branch and it causes a conflict or some other odd behaviour.
 
 The `ero` cli tool allows me to quickly verify which files I _actually_ need to update (i.e. the file on stage isn't the same as what's in `master`). Otherwise I'll be forced to blindly upload 10+ separate VCL files via the Fastly UI to ensure that stage is in a stable state for me to upload my own changes on top of.
-
-> ero is "difference" in Finnish
 
 ## Installation
 
