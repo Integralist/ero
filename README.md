@@ -130,3 +130,15 @@ gox -osarch="linux/amd64" -osarch="darwin/amd64" -osarch="windows/amd64" -output
 
 ./ero.darwin -h
 ```
+
+## Environment Variables
+
+The use of environment variables help to reduce the amount of flags required to get stuff done. For example, I always diff against a stage environment of Fastly and so I don't want to have to put in the same credentials all the time.
+
+Below is a list of environment variables this tool supports:
+
+* `FASTLY_API_TOKEN`
+* `FASTLY_SERVICE_ID`
+* `VCL_DIRECTORY`
+* `VCL_MATCH_DIRECTORY`
+* `VCL_SKIP_DIRECTORY`
