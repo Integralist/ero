@@ -61,8 +61,8 @@ func main() {
 	service := flag.String("service", os.Getenv("FASTLY_SERVICE_ID"), "your service id (fallback: FASTLY_SERVICE_ID)")
 	token := flag.String("token", os.Getenv("FASTLY_API_TOKEN"), "your fastly api token (fallback: FASTLY_API_TOKEN)")
 	dir := flag.String("dir", os.Getenv("VCL_DIRECTORY"), "vcl directory to compare files against")
-	skip := flag.String("skip", "^____", "regex for skipping vcl directories")
-	match := flag.String("match", "", "regex for matching vcl directories")
+	skip := flag.String("skip", "^____", "regex for skipping vcl directories (will also try: VCL_SKIP_DIRECTORY)")
+	match := flag.String("match", "", "regex for matching vcl directories (will also try: VCL_MATCH_DIRECTORY)")
 	flag.Parse()
 
 	if *help == true {
@@ -100,6 +100,10 @@ func main() {
 	listVersions, err := client.ListVersions(&fastly.ListVersionsInput{
 		Service: fastlyServiceID,
 	})
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 
 	wv := wrappedVersions{}
 	for _, v := range listVersions {
@@ -173,7 +177,7 @@ func getVCL(path string, client *fastly.Client) {
 		ch <- vclResponse{
 			Path:    path,
 			Name:    name,
-			Content: "error",
+			Content: fmt.Sprintf("error: %s", err),
 		}
 	} else {
 		ch <- vclResponse{

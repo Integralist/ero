@@ -4,6 +4,8 @@ Ero is a cli tool, built in [Go](https://golang.org), used to diff between local
 
 > ero is "difference" in Finnish
 
+If you require a cli tool for uploading local VCL files to a remote version within a Fastly account, then see [Lataa](https://github.com/Integralist/lataa)
+
 ## Why?
 
 Typically when modifying VCL files, I'll be working within a 'staging' environment (this would be where we test out any VCL changes _before_ applying them to our production environment). 
@@ -84,7 +86,7 @@ ero -skip 'foo|bar'
 
 ## Example
 
-Here is an example execution:
+The following example execution has presumed the use of the environment variables: `VCL_DIRECTORY`, `FASTLY_API_TOKEN`, `FASTLY_SERVICE_ID` to keep the length of the command short.
 
 ```bash
 $ ero -match www -debug
