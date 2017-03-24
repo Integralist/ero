@@ -16,6 +16,9 @@ import (
 	fastly "github.com/sethvargo/go-fastly"
 )
 
+// Version is the application version
+const Version = "1.0.1"
+
 // Fastly API doesn't return sorted data
 type version struct {
 	Number  int
@@ -71,7 +74,7 @@ func main() {
 	}
 
 	if *appVersion == true {
-		fmt.Println("1.0.0")
+		fmt.Println(Version)
 		os.Exit(1)
 	}
 
@@ -199,7 +202,14 @@ func processDiff(vr vclResponse, debug bool) {
 		cmdOut []byte
 	)
 	cmdName := "diff"
-	cmdArgs := []string{"-w", "-B", "-I", "[[:space:]]\\+#", "-", vr.Path}
+	cmdArgs := []string{
+		"--ignore-all-space",
+		"--ignore-blank-lines",
+		"--ignore-matching-lines",
+		"^[[:space:]]\\+#",
+		"-", // first file comes from stdin
+		vr.Path,
+	}
 	cmd := exec.Command(cmdName, cmdArgs...)
 	cmd.Stdin = strings.NewReader(vr.Content)
 
